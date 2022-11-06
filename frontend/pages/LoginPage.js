@@ -2,13 +2,42 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'react-native';
 
+import { buildPath } from '../assets/Path';
+import { hash } from '../assets/functions';
+
 export default function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginMessage, setLoginMessage] = useState('');
 
     const handleLogin = async function() {
-        console.log(username);
-        console.log(password);
+        if (username.trim() === '' || password.trim() === '') {
+            setLoginMessage('Please fill in all fields');
+            return;
+        }
+
+        let hashedPassword = await hash(password);
+        let obj = {username: username, password: hashedPassword};
+        let jsonPayload = JSON.stringify(obj);
+
+        try {
+            const response = await fetch(buildPath('/api/login'), {
+                method:'POST', body:jsonPayload, headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+
+            let res = JSON.parse(await response.text());
+            if (res.error) {
+                setLoginMessage(res.error);
+                return;
+            }
+
+            setLoginMessage(res.user.Username);
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     return(
@@ -37,8 +66,9 @@ export default function LoginPage() {
                     <View style={styles.button}>
                         <Button 
                             title='Log In' 
-                            onClick={handleLogin} />
+                            onPress={handleLogin} />
                     </View>
+                    <Text style={styles.resultMessage}>{loginMessage}</Text>
                 </View>
             </ImageBackground>
         </View>
@@ -83,5 +113,12 @@ const styles = StyleSheet.create({
     button: {
         paddingTop: 25,
         width: '50%'
+    },
+    resultMessage: {
+        textAlign: 'center',
+        width: '70%',
+        paddingTop: 15,
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 });

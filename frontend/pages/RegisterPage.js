@@ -2,17 +2,56 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'react-native';
 
+import { buildPath } from '../assets/Path';
+import { hash } from '../assets/functions';
+
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [registrationMessage, setRegistrationMessage] = useState('');
 
     const handleRegister = async function() {
-        console.log(email);
-        console.log(username);
-        console.log(password);
-        console.log(confirmPassword);
+        if (email.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
+            setRegistrationMessage('Please fill in all fields');
+            return;
+        }
+        if (password !== confirmPassword) {
+            setRegistrationMessage('Your passwords do not match');
+            return;
+        }
+
+        let hashedPassword = await hash(password);
+        let obj = {
+            email: email,
+            username: username,
+            password: hashedPassword
+        };
+        let jsonPayload = JSON.stringify(obj);
+
+        try {
+            const response = await fetch(buildPath('/api/register'), {
+                method:'POST', body:jsonPayload, headers: {
+                    'Content-Type':'application/json'
+                }
+            });
+
+            let res = JSON.parse(await response.text());
+            if (res.error) {
+                setRegistrationMessage(res.error);
+                return;
+            }
+
+            setEmail('');
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+            setRegistrationMessage('A confirmation link has been sent to your email');
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     return(
@@ -57,8 +96,9 @@ export default function RegisterPage() {
                     <View style={styles.button}>
                         <Button 
                             title='Register' 
-                            onClick={handleRegister} />
+                            onPress={handleRegister} />
                     </View>
+                    <Text style={styles.resultMessage}>{registrationMessage}</Text>
                 </View>
             </ImageBackground>
         </View>
@@ -103,5 +143,12 @@ const styles = StyleSheet.create({
     button: {
         paddingTop: 25,
         width: '50%'
+    },
+    resultMessage: {
+        textAlign: 'center',
+        width: '70%',
+        paddingTop: 15,
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 });
