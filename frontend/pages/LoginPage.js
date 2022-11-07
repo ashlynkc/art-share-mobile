@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'reac
 import { buildPath } from '../assets/Path';
 import { hash } from '../assets/functions';
 
-export default function LoginPage() {
+export default function LoginPage({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
@@ -69,6 +69,11 @@ export default function LoginPage() {
                             onPress={handleLogin} />
                     </View>
                     <Text style={styles.resultMessage}>{loginMessage}</Text>
+                    <View>
+                        <Button 
+                            title='Register an Account'
+                            onPress={() => navigation.navigate('Register')} />
+                    </View>
                 </View>
             </ImageBackground>
         </View>
