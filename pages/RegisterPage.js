@@ -2,26 +2,36 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'react-native';
 
-import { buildPath } from '../assets/Path';
-import { hash } from '../assets/functions';
+import { buildPath } from '../assets/scripts/Path';
+import { hash } from '../assets/scripts/HelperFunctions';
 
-export default function LoginPage({ navigation }) {
+export default function RegisterPage({ navigation }) {
+    const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginMessage, setLoginMessage] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [registrationMessage, setRegistrationMessage] = useState('');
 
-    const handleLogin = async function() {
-        if (username.trim() === '' || password.trim() === '') {
-            setLoginMessage('Please fill in all fields');
+    const handleRegister = async function() {
+        if (email.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
+            setRegistrationMessage('Please fill in all fields');
+            return;
+        }
+        if (password !== confirmPassword) {
+            setRegistrationMessage('Your passwords do not match');
             return;
         }
 
         let hashedPassword = await hash(password);
-        let obj = {username: username, password: hashedPassword};
+        let obj = {
+            email: email,
+            username: username,
+            password: hashedPassword
+        };
         let jsonPayload = JSON.stringify(obj);
 
         try {
-            const response = await fetch(buildPath('/api/login'), {
+            const response = await fetch(buildPath('/api/register'), {
                 method:'POST', body:jsonPayload, headers: {
                     'Content-Type':'application/json'
                 }
@@ -29,11 +39,15 @@ export default function LoginPage({ navigation }) {
 
             let res = JSON.parse(await response.text());
             if (res.error) {
-                setLoginMessage(res.error);
+                setRegistrationMessage(res.error);
                 return;
             }
 
-            setLoginMessage(res.user.Username);
+            setEmail('');
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+            setRegistrationMessage('A confirmation link has been sent to your email');
         }
         catch(e) {
             console.error(e);
@@ -45,10 +59,17 @@ export default function LoginPage({ navigation }) {
             <ImageBackground style={styles.background}>
                 <View style={styles.display}>
                     <Text style={styles.title}>Art Share</Text>
-                    <Text style={styles.header}>Log In</Text>
+                    <Text style={styles.header}>Register</Text>
                 </View>
 
                 <View style={styles.formInput}>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput 
+                        style={styles.input}
+                        placeholder='Email'
+                        value={email}
+                        onChangeText={(val) => setEmail(val)} />
+
                     <Text style={styles.label}>Username</Text>
                     <TextInput 
                         style={styles.input}
@@ -63,16 +84,25 @@ export default function LoginPage({ navigation }) {
                         value={password}
                         onChangeText={(val) => setPassword(val)} 
                         secureTextEntry={true} />
+
+                    <Text style={styles.label}>Confirm Password</Text>
+                    <TextInput 
+                        style={styles.input}
+                        placeholder='Confirm Password'
+                        value={confirmPassword}
+                        onChangeText={(val) => setConfirmPassword(val)} 
+                        secureTextEntry={true} />
+
                     <View style={styles.button}>
                         <Button 
-                            title='Log In' 
-                            onPress={handleLogin} />
+                            title='Register' 
+                            onPress={handleRegister} />
                     </View>
-                    <Text style={styles.resultMessage}>{loginMessage}</Text>
+                    <Text style={styles.resultMessage}>{registrationMessage}</Text>
                     <View>
                         <Button 
-                            title='Register an Account'
-                            onPress={() => navigation.navigate('Register')} />
+                            title='Back to log in'
+                            onPress={() => navigation.navigate('Login')} />
                     </View>
                 </View>
             </ImageBackground>
