@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'reac
 
 import { buildPath } from '../assets/scripts/Path';
 import { hash } from '../assets/scripts/HelperFunctions';
+import { globalStyles } from '../assets/scripts/GlobalStyles';
 
 export default function RegisterPage({ navigation }) {
     const [email, setEmail] = useState('');
@@ -56,7 +57,7 @@ export default function RegisterPage({ navigation }) {
 
     return(
         <View>
-            <ImageBackground style={styles.background}>
+            <ImageBackground style={globalStyles.background}>
                 <View style={styles.display}>
                     <Text style={styles.title}>Art Share</Text>
                     <Text style={styles.header}>Register</Text>
@@ -111,9 +112,6 @@ export default function RegisterPage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    background: {
-        backgroundColor: '#ffa6a6'
-    },
     display: {
         paddingBottom: 100
     },

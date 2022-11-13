@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { globalStyles } from '../assets/scripts/GlobalStyles';
 import { buildPath } from '../assets/scripts/Path';
 import { hash } from '../assets/scripts/HelperFunctions';
 
@@ -33,7 +35,9 @@ export default function LoginPage({ navigation }) {
                 return;
             }
 
-            setLoginMessage(res.user.Username);
+            await AsyncStorage.setItem('userData', JSON.stringify(res.user));
+            await AsyncStorage.setItem('accessToken', res.accessToken);
+            navigation.navigate('Profile');
         }
         catch(e) {
             console.error(e);
@@ -42,7 +46,7 @@ export default function LoginPage({ navigation }) {
 
     return(
         <View>
-            <ImageBackground style={styles.background}>
+            <ImageBackground style={globalStyles.background}>
                 <View style={styles.display}>
                     <Text style={styles.title}>Art Share</Text>
                     <Text style={styles.header}>Log In</Text>
@@ -81,9 +85,6 @@ export default function LoginPage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    background: {
-        backgroundColor: '#ffa6a6'
-    },
     display: {
         paddingBottom: 100
     },
