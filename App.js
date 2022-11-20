@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import AddPostPage from './pages/AddPostPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name='Login' component={LoginPage} />
         <Stack.Screen name='Register' component={RegisterPage} />
         <Stack.Screen name='Profile' component={ProfilePage} />
+        <Stack.Screen name='AddPost' component={AddPostPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
