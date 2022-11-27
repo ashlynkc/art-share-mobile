@@ -90,8 +90,7 @@ export default function AddPostPage({ navigation }) {
             }
 
             await AsyncStorage.setItem('accessToken', res.accessToken);
-            // TODO:
-            // navigation.navigate('Home');
+            navigation.navigate('Home');
         }
         catch(e) {
             console.error(e);
@@ -109,14 +108,14 @@ export default function AddPostPage({ navigation }) {
             {/* Art Info */}
             <View style={styles.formInput}>
                 <Text style={styles.label}>Title</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
                     placeholder='Title'
                     value={title}
                     onChangeText={(val) => setTitle(val)} />
 
                 <Text style={styles.label}>Description</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
                     multiline={true}
                     numberOfLines={6}
@@ -126,14 +125,14 @@ export default function AddPostPage({ navigation }) {
 
                 <View style={styles.visibilityContainer}>
                     <Text style={styles.label}>Public</Text>
-                    <RadioButton 
+                    <RadioButton
                         value='public'
                         status={isPublic ? 'checked' : 'unchecked'}
                         onPress={() => setIsPublic(true)}
                         style={styles.radioButton} />
 
                     <Text style={styles.label}>Private</Text>
-                    <RadioButton 
+                    <RadioButton
                         value='private'
                         status={!isPublic ? 'checked' : 'unchecked'}
                         onPress={() => setIsPublic(false)}
@@ -142,12 +141,12 @@ export default function AddPostPage({ navigation }) {
 
                 {/* Upload Image */}
                 <View style={styles.buttonContainer}>
-                    <Button title='Choose File' onPress={pickFile} />
+                    <Button title='Choose File' color='#b93e3e' onPress={pickFile} />
                     <Text style={styles.resultMessage}>{fileMessage}</Text>
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <Button title='Post' onPress={post} />
+                    <Button title='Post' color='#b93e3e' onPress={post} />
                 </View>
 
                 <Text style={styles.resultMessage}>{message}</Text>
@@ -158,7 +157,7 @@ export default function AddPostPage({ navigation }) {
 
 const styles = StyleSheet.create({
     display: {
-        paddingBottom: 80
+        paddingBottom: 50
     },
     title: {
         textAlign: 'center',
@@ -179,7 +178,8 @@ const styles = StyleSheet.create({
     },
     label: {
         paddingLeft: 10,
-        paddingTop: 20,
+        paddingTop: 10,
+        paddingBottom: 5,
         fontSize: 20,
         fontWeight: 'bold'
     },

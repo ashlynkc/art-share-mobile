@@ -5,8 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import AddPostPage from './pages/AddPostPage';
+import ViewPostPage from './pages/ViewPostPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,8 +18,10 @@ export default function App() {
       <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen name='Login' component={LoginPage} />
         <Stack.Screen name='Register' component={RegisterPage} />
+        <Stack.Screen name='Home' component={HomePage} />
         <Stack.Screen name='Profile' component={ProfilePage} />
         <Stack.Screen name='AddPost' component={AddPostPage} />
+        <Stack.Screen name='ViewPost' component={ViewPostPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
