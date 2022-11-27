@@ -54,28 +54,30 @@ export default function LoginPage({ navigation }) {
 
                 <View style={styles.formInput}>
                     <Text style={styles.label}>Username</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.input}
                         placeholder='Username'
                         value={username}
                         onChangeText={(val) => setUsername(val)} />
 
                     <Text style={styles.label}>Password</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.input}
                         placeholder='Password'
                         value={password}
-                        onChangeText={(val) => setPassword(val)} 
+                        onChangeText={(val) => setPassword(val)}
                         secureTextEntry={true} />
-                    <View style={styles.button}>
-                        <Button 
-                            title='Log In' 
+                    <View style={styles.buttonPadding}>
+                        <Button
+                            title='Log In'
+                            color='#b93e3e'
                             onPress={handleLogin} />
                     </View>
                     <Text style={styles.resultMessage}>{loginMessage}</Text>
                     <View>
-                        <Button 
+                        <Button
                             title='Register an Account'
+                            color='#b93e3e'
                             onPress={() => navigation.navigate('Register')} />
                     </View>
                 </View>
@@ -86,7 +88,7 @@ export default function LoginPage({ navigation }) {
 
 const styles = StyleSheet.create({
     display: {
-        paddingBottom: 100
+        paddingBottom: 60
     },
     title: {
         textAlign: 'center',
@@ -107,6 +109,8 @@ const styles = StyleSheet.create({
     },
     label: {
         paddingLeft: 10,
+        paddingTop: 10,
+        paddingBottom: 5,
         fontSize: 20,
         fontWeight: 'bold'
     },
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 200
     },
-    button: {
+    buttonPadding: {
         paddingTop: 25,
         width: '50%'
     },

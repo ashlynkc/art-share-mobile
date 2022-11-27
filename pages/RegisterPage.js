@@ -65,44 +65,46 @@ export default function RegisterPage({ navigation }) {
 
                 <View style={styles.formInput}>
                     <Text style={styles.label}>Email</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.input}
                         placeholder='Email'
                         value={email}
                         onChangeText={(val) => setEmail(val)} />
 
                     <Text style={styles.label}>Username</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.input}
                         placeholder='Username'
                         value={username}
                         onChangeText={(val) => setUsername(val)} />
 
                     <Text style={styles.label}>Password</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.input}
                         placeholder='Password'
                         value={password}
-                        onChangeText={(val) => setPassword(val)} 
+                        onChangeText={(val) => setPassword(val)}
                         secureTextEntry={true} />
 
                     <Text style={styles.label}>Confirm Password</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.input}
                         placeholder='Confirm Password'
                         value={confirmPassword}
-                        onChangeText={(val) => setConfirmPassword(val)} 
+                        onChangeText={(val) => setConfirmPassword(val)}
                         secureTextEntry={true} />
 
-                    <View style={styles.button}>
-                        <Button 
-                            title='Register' 
+                    <View style={styles.buttonPadding}>
+                        <Button
+                            title='Register'
+                            color='#b93e3e'
                             onPress={handleRegister} />
                     </View>
                     <Text style={styles.resultMessage}>{registrationMessage}</Text>
                     <View>
-                        <Button 
+                        <Button
                             title='Back to log in'
+                            color='#b93e3e'
                             onPress={() => navigation.navigate('Login')} />
                     </View>
                 </View>
@@ -113,7 +115,7 @@ export default function RegisterPage({ navigation }) {
 
 const styles = StyleSheet.create({
     display: {
-        paddingBottom: 100
+        paddingBottom: 30
     },
     title: {
         textAlign: 'center',
@@ -134,6 +136,8 @@ const styles = StyleSheet.create({
     },
     label: {
         paddingLeft: 10,
+        paddingTop: 10,
+        paddingBottom: 5,
         fontSize: 20,
         fontWeight: 'bold'
     },
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 200
     },
-    button: {
+    buttonPadding: {
         paddingTop: 25,
         width: '50%'
     },
