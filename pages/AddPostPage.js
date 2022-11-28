@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'react-native';
+import { Icon } from '@rneui/themed';
 import { RadioButton } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -97,6 +98,18 @@ export default function AddPostPage({ navigation }) {
         }
     }
 
+    const navigateToHome = async function() {
+        navigation.navigate('Home');
+    }
+
+    const navigateToAddPost = async function() {
+        navigation.navigate('AddPost');
+    }
+
+    const navigateToProfile = async function() {
+        navigation.navigate('Profile');
+    }
+
     return(
         <View style={globalStyles.background}>
             {/* Header Info */}
@@ -150,6 +163,12 @@ export default function AddPostPage({ navigation }) {
                 </View>
 
                 <Text style={styles.resultMessage}>{message}</Text>
+
+                <View style={styles.navBar}>
+                    <Icon reverse name='home' color='#b93e3e' onPress={navigateToHome} />
+                    <Icon reverse name='add' color='#b93e3e' onPress={navigateToAddPost} />
+                    <Icon reverse name='person' color='#b93e3e' onPress={navigateToProfile} />
+                </View>
             </View>
         </View>
     );
@@ -198,8 +217,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     buttonContainer: {
-        paddingTop: 30,
-        paddingBottom: 10
+        paddingTop: 30
     },
     button: {
         width: '50%'
@@ -210,5 +228,10 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    navBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });

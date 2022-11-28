@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ImageBackground } from 'react-native';
+import { Icon } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { globalStyles } from '../assets/scripts/GlobalStyles';
@@ -9,9 +10,25 @@ import { hash } from '../assets/scripts/HelperFunctions';
 
 export default function HomePage({ navigation }) {
 
+    const navigateToHome = async function() {
+        navigation.navigate('Home');
+    }
+
+    const navigateToAddPost = async function() {
+        navigation.navigate('AddPost');
+    }
+
+    const navigateToProfile = async function() {
+        navigation.navigate('Profile');
+    }
+
     return(
         <View>
-            
+            <View style={styles.navBar}>
+                <Icon reverse name='home' color='#b93e3e' onPress={navigateToHome} />
+                <Icon reverse name='add' color='#b93e3e' onPress={navigateToAddPost} />
+                <Icon reverse name='person' color='#b93e3e' onPress={navigateToProfile} />
+            </View>
         </View>
     );
 }
@@ -60,5 +77,10 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    navBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });

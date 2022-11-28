@@ -37,7 +37,7 @@ export default function LoginPage({ navigation }) {
 
             await AsyncStorage.setItem('userData', JSON.stringify(res.user));
             await AsyncStorage.setItem('accessToken', res.accessToken);
-            navigation.navigate('Profile');
+            navigation.navigate('Home');
         }
         catch(e) {
             console.error(e);
