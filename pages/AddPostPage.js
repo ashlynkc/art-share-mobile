@@ -91,7 +91,7 @@ export default function AddPostPage({ navigation }) {
             }
 
             await AsyncStorage.setItem('accessToken', res.accessToken);
-            navigation.navigate('Home');
+            navigation.navigate('Profile');
         }
         catch(e) {
             console.error(e);
@@ -115,6 +115,7 @@ export default function AddPostPage({ navigation }) {
             {/* Header Info */}
             <View style={styles.display}>
                 <Text style={styles.title}>Art Share</Text>
+                
                 <Text style={styles.header}>Add a Post</Text>
             </View>
 
@@ -165,7 +166,7 @@ export default function AddPostPage({ navigation }) {
                 <Text style={styles.resultMessage}>{message}</Text>
 
                 <View style={styles.navBar}>
-                    <Icon reverse name='home' color='#b93e3e' onPress={navigateToHome} />
+                    {/* <Icon reverse name='home' color='#b93e3e' onPress={navigateToHome} /> */}
                     <Icon reverse name='add' color='#b93e3e' onPress={navigateToAddPost} />
                     <Icon reverse name='person' color='#b93e3e' onPress={navigateToProfile} />
                 </View>
@@ -232,6 +233,7 @@ const styles = StyleSheet.create({
     navBar: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });

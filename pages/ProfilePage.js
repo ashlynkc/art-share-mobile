@@ -309,12 +309,25 @@ export default function ProfilePage({ navigation }) {
         await AsyncStorage.setItem('userData', JSON.stringify(userData));
     }
 
+    const navigateToHome = async function() {
+        navigation.navigate('Home');
+    }
+
+    const navigateToAddPost = async function() {
+        navigation.navigate('AddPost');
+    }
+
+    const navigateToProfile = async function() {
+        navigation.navigate('Profile');
+    }
+
     return(
         <View style={globalStyles.background}>
             <ScrollView>
                 {/* Header Info */}
                 <View style={styles.display}>
                     <Text style={styles.title}>Art Share</Text>
+                    
                     <Text style={styles.header}>My Profile</Text>
                 </View>
 
@@ -344,7 +357,7 @@ export default function ProfilePage({ navigation }) {
 
 
                     <View style={styles.buttonContainer}>
-                        <Button title='Save Changes' onPress={handleChanges} />
+                        <Button color='#b93e3e' title='Save Changes' onPress={handleChanges} />
                     </View>
                 </View>
 
@@ -374,7 +387,7 @@ export default function ProfilePage({ navigation }) {
                         value={addFriendUsername}
                         onChangeText={(val) => setAddFriendUsername(val)} />
                     <View style={styles.buttonContainer}>
-                        <Button title='Submit Query' onPress={addFriend} />
+                        <Button color='#b93e3e' title='Submit' onPress={addFriend} />
                     </View>
                     <Text style={styles.resultMessage}>{addFriendMessage}</Text>
                 </View>
@@ -403,6 +416,12 @@ export default function ProfilePage({ navigation }) {
                         {sentRequests.map((friend) => <Text>{friend.content}</Text>)}
                     </View>
                 </ScrollView>
+
+                <View style={styles.navBar}>
+                    {/* <Icon reverse name='home' color='#b93e3e' onPress={navigateToHome} /> */}
+                    <Icon reverse name='add' color='#b93e3e' onPress={navigateToAddPost} />
+                    <Icon reverse name='person' color='#b93e3e' onPress={navigateToProfile} />
+                </View>
                 
             </ScrollView>
         </View>
@@ -463,5 +482,11 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    navBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
